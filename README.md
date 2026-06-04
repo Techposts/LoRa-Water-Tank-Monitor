@@ -1,5 +1,6 @@
-# TankSync — reliable smart water monitoring
+# TankSync™ — reliable smart water monitoring
 
+[![Pre-order Developer Edition](https://img.shields.io/badge/Pre--order-Developer%20Edition-success.svg?style=flat)](https://shop.smartghar.org)
 [![Firmware: AGPL-3.0](https://img.shields.io/badge/Firmware-AGPL--3.0-blue.svg)](LICENSE)
 [![Hardware: CC BY-SA 4.0](https://img.shields.io/badge/Hardware-CC%20BY--SA%204.0-orange.svg)](hardware/LICENSE)
 [![ESP-IDF](https://img.shields.io/badge/ESP--IDF-v5.4-red.svg)](https://docs.espressif.com/projects/esp-idf/)
@@ -14,6 +15,17 @@
 </p>
 <p align="center">
   <sub><em>The indoor hub (left), the solar tank sensor with non-contact ultrasonic measurement (centre), and the custom circular TX PCB (right) — current production hardware, REV 2.2 (May 2026), tested through Delhi summer at 45°C ambient.</em></sub>
+</p>
+
+## Watch the story — Episode 1
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=ZZt6cZbWM0g">
+    <img src="https://img.youtube.com/vi/ZZt6cZbWM0g/maxresdefault.jpg" width="70%" alt="TankSync Episode 1 — Smart Home That Works Without Internet" />
+  </a>
+</p>
+<p align="center">
+  <sub><em>Why I built TankSync, the local-first philosophy, and how the rooftop sensor + indoor hub stay reliable when the internet doesn't. <a href="https://www.youtube.com/watch?v=ZZt6cZbWM0g">Watch on YouTube →</a></em></sub>
 </p>
 
 ## Try the in-browser flasher first
@@ -32,6 +44,23 @@ Most "smart tank" products treat the cloud as the product. TankSync treats **rel
 - **Home Assistant native.** Auto-discovery via MQTT plus a dedicated [HACS integration](https://github.com/Techposts/smartghar-homeassistant) — every tank shows up as an HA device with live sensors, fill events, and editable settings.
 - **Open at the core.** Firmware (AGPL-3.0), hardware (CC BY-SA 4.0), schematics, BOM, and flashing tools are all public. Self-host it. Fork it. Modify it. Audit it. No vendor lock-in.
 - **Built for Indian realities.** Designed and tested through Delhi summer (45 °C ambient). UV-stabilised PETG, IP65 sealing, monsoon-ready. Engineered for terrace tanks, high-rise apartments, thick walls, and unreliable connectivity.
+
+## Get the hardware
+
+<table>
+<tr>
+<td width="42%" valign="middle">
+  <img src="hardware/photos/render-hub-wall.png" alt="TankSync Developer Edition kit — wall-mounted hub + solar rooftop sensor" />
+</td>
+<td valign="middle">
+  <h3>Skip the build — Developer Edition kits are on pre-order.</h3>
+  <p>Hub + solar sensor + all the bits. First batch ships end of July / early August 2026.</p>
+  <p><b>→ <a href="https://shop.smartghar.org">shop.smartghar.org</a></b></p>
+  <p><sub>Indian buyers: bank transfer accepted today. PayPal for international buyers going live this week.</sub></p>
+  <p><sub>Or build it yourself — full BOM, schematics, and firmware are below. A free tier on the cloud is available either way.</sub></p>
+</td>
+</tr>
+</table>
 
 ## Architecture
 
@@ -94,6 +123,8 @@ esptool.py --chip esp32c3 -b 460800 write_flash 0x10000 tanksync-transmitter-tx-
 ```
 
 ### Option 3: Build from source
+
+> **Note on source versions.** The firmware source in this repo corresponds to the **rx-v2.8.6 / tx-v2.0.15** line (and earlier) and is licensed AGPL-3.0 — build it, audit it, fork it. Releases **after** that version are published as ready-to-flash **binaries** (see [Releases](../../releases)) rather than source. The full local-first feature set and the in-browser flasher work with both.
 
 Prerequisites: [ESP-IDF v5.4+](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/)
 
@@ -186,11 +217,12 @@ The firmware works fully **without** the cloud — local web UI on the hub gives
 
 | Component | License | What this means |
 |---|---|---|
-| Firmware (`firmware/`) | [AGPL-3.0](LICENSE) | Free for personal + community use. Commercial users who modify and distribute must also open-source their changes under AGPL. |
+| Firmware source (`firmware/`) | [AGPL-3.0](LICENSE) | Source through **rx-v2.8.6 / tx-v2.0.15**. Free for personal + community use; commercial users who modify and distribute must open-source their changes under AGPL. |
+| Newer firmware (Releases) | Binary, proprietary | Versions after the line above ship as ready-to-flash `.bin` files. Free to download and flash on TankSync™ hardware; not redistributable or reverse-engineerable for resale. |
 | Hardware (`hardware/`) | [CC BY-SA 4.0](hardware/LICENSE) | Attribution + ShareAlike. Build it, sell it, modify it — credit the source and share-alike. |
 | HA Integration | [MIT](https://github.com/Techposts/smartghar-homeassistant/blob/main/LICENSE) (separate repo) | Frictionless for HA ecosystem. |
 
-**Why AGPL on firmware?** It keeps TankSync open for hobbyists and HA users while preventing commercial vendors from repackaging the firmware into a closed product. If you want a non-AGPL commercial license for embedded use, reach out to the maintainer.
+**Why a source freeze + binary releases?** The published firmware source (rx-v2.8.6 / tx-v2.0.15 and earlier, AGPL-3.0) stays open for hobbyists and HA users to build, audit, and fork. Development now focuses on the cloud platform, so newer firmware is distributed as binaries instead of source — the local-first experience is unchanged, and the in-browser flasher always carries the latest build. If you want a commercial firmware license for embedded use, reach out to the maintainer.
 
 ## Contributing
 
@@ -198,6 +230,8 @@ Issues and PRs welcome. Read the [wiring guide](hardware/wiring.md) before openi
 
 ## Author + brand
 
-**Ravi Singh** ([@ravis1ngh on YouTube](https://www.youtube.com/@ravis1ngh)) — solo-building open-source home infrastructure in India under the **TechPosts Media** / **SmartGhar** banner. Design, firmware, hardware, PCB layouts, and 3D-printed enclosures — all done in-house.
+**Ravi Singh** ([@ravis1ngh on YouTube](https://www.youtube.com/@ravis1ngh)) — solo-building open-source home infrastructure in India under the **TechPosts Media** / **SmartGharLabs™** banner. Design, firmware, hardware, PCB layouts, and 3D-printed enclosures — all done in-house.
 
-**TankSync** is part of the **SmartGhar** ecosystem ([smartghar.org](https://smartghar.org)) — calm, local-first smart-home infrastructure engineered for real-world Indian deployments.
+**TankSync™** is part of the **SmartGhar** ecosystem ([smartghar.org](https://smartghar.org)) — calm, local-first smart-home infrastructure engineered for real-world Indian deployments.
+
+<sub>TankSync™ and SmartGharLabs™ are trademarks of SmartGharLabs.</sub>
