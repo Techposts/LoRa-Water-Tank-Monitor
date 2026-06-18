@@ -90,7 +90,7 @@ Most "smart tank" products treat the cloud as the product. TankSync treats **rel
 |-----------|------|-------------------|
 | Receiver MCU | ESP32 DevKit v1 | ₹300–400 |
 | Transmitter MCU | ESP32-C3 SuperMini | ₹200 |
-| LoRa module | REYAX RYLR998 (×2) | ₹199 ($12) each |
+| LoRa module | REYAX RYLR998 (×2) | ₹1199 ($12) each |
 | Ultrasonic sensor | JSN-SR04T (waterproof) | ₹350 |
 | Display | SH1106 1.3" OLED I²C | ₹250 |
 | Battery | Protected 18650 + holder | ₹200 |
