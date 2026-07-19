@@ -3,7 +3,7 @@
 [![Pre-order Developer Edition](https://img.shields.io/badge/Pre--order-Developer%20Edition-success.svg?style=flat)](https://shop.smartghar.org)
 [![Firmware: AGPL-3.0](https://img.shields.io/badge/Firmware-AGPL--3.0-blue.svg)](LICENSE)
 [![Hardware: CC BY-SA 4.0](https://img.shields.io/badge/Hardware-CC%20BY--SA%204.0-orange.svg)](hardware/LICENSE)
-[![ESP-IDF](https://img.shields.io/badge/ESP--IDF-v5.4-red.svg)](https://docs.espressif.com/projects/esp-idf/)
+[![ESP-IDF](https://img.shields.io/badge/ESP--IDF-v5.5-red.svg)](https://docs.espressif.com/projects/esp-idf/)
 [![Home Assistant](https://img.shields.io/badge/HA-Integration-blue.svg)](https://github.com/Techposts/smartghar-homeassistant)
 
 **Never worry about your water tank again.** A solar-powered sensor on the rooftop, a quiet hub on the wall, and smart water monitoring that keeps working — even when the internet doesn't. Long-range LoRa (RYLR998) to an ESP32 hub, local web UI, Home Assistant via HACS, optional cloud PWA. Open at the core.
@@ -68,9 +68,9 @@ Most "smart tank" products treat the cloud as the product. TankSync treats **rel
                     LoRa 865/915 MHz (up to 5 km, through walls)
                     ==============================================>
   TRANSMITTER                                          HUB (RECEIVER)
-  ESP32-C3 SuperMini                                   ESP32 DevKit
+  ESP32-C3 SuperMini/Pro Mini                          ESP32-S3
   + JSN-SR04T Ultrasonic                               + RYLR998 LoRa
-  + RYLR998 LoRa                                       + SH1106 OLED
+  + RYLR998 LoRa                                       + GC9A01 round TFT
   + 18650 + solar                                      + WS2812 LED ring
                                                        + WiFi (optional)
                                                           |
@@ -88,21 +88,19 @@ Most "smart tank" products treat the cloud as the product. TankSync treats **rel
 
 | Component | Part | Approx cost (INR) |
 |-----------|------|-------------------|
-| Receiver MCU | ESP32 DevKit v1 | ₹300–400 |
-| Transmitter MCU | ESP32-C3 SuperMini | ₹200 |
-| LoRa module | REYAX RYLR998 (×2) | ₹1199 ($12) each |
+| Receiver MCU (hub) | ESP32-S3 module | ₹450–700 |
+| Transmitter MCU | ESP32-C3 SuperMini / Pro Mini | ₹200 |
+| LoRa module | REYAX RYLR998 (×2) | ₹650 each |
 | Ultrasonic sensor | JSN-SR04T (waterproof) | ₹350 |
-| Display | SH1106 1.3" OLED I²C | ₹250 |
+| Display (hub) | GC9A01 1.28" round TFT | ₹300 |
 | Battery | Protected 18650 + holder | ₹200 |
 | Solar charger | CN3791 MPPT module | ₹120 |
 | Boost converter | MT3608 3.7 V → 5 V | ₹50 |
 
-Total: **~₹5,000+ per complete system** (one hub + one tank). Per-tank addition: ~₹1,500.
+Total: **~₹3,800-5,200 per complete system** (one hub + one tank). Per-tank addition: ~₹1,500.
 
-📐 **[Detailed wiring + power chains →](hardware/wiring.md)**
+📐 **[Detailed wiring + pin maps →](hardware/README.md)**
 📋 **[Full BOM →](hardware/BOM.csv)**
-LoRa RYLR998 - https://www.amazon.com/REYAX-RYLR998-Interface-Antenna-Transceiver/dp/B099RM1XMG?ref_=ast_sto_dp
-
 
 ## Quick start
 
@@ -112,23 +110,25 @@ LoRa RYLR998 - https://www.amazon.com/REYAX-RYLR998-Interface-Antenna-Transceive
 
 Plug your board into a USB port, pick the right card (Receiver Hub or Transmitter), click Install. Done in ~45 sec.
 
-### Option 2: esptool.py (CLI)
+### Option 2: esptool (CLI)
 
 Download the latest `.bin` from [Releases](../../releases).
 
 ```bash
-# Receiver (ESP32 DevKit)
-esptool.py --chip esp32 -b 460800 write_flash 0x10000 tanksync-receiver-rx-vX.Y.Z.bin
+# Receiver / Hub (ESP32-S3) — full image, flash at 0x0
+esptool --chip esp32s3 -b 460800 write_flash 0x0 tanksync-receiver-esp32s3-cam-vX.Y.Z-full.bin
 
-# Transmitter (ESP32-C3 SuperMini)
-esptool.py --chip esp32c3 -b 460800 write_flash 0x10000 tanksync-transmitter-tx-vX.Y.Z.bin
+# Transmitter (ESP32-C3 SuperMini / Pro Mini) — full image, flash at 0x0
+esptool --chip esp32c3 -b 460800 write_flash 0x0 tanksync-transmitter-lora-esp32c3-vX.Y.Z-full.bin
+
+# (Legacy ESP32 DevKit hubs: use tanksync-receiver-esp32-vX.Y.Z-full.bin with --chip esp32.)
 ```
 
 ### Option 3: Build from source
 
 > **Note on source versions.** The firmware source in this repo corresponds to the **rx-v2.8.6 / tx-v2.0.15** line (and earlier) and is licensed AGPL-3.0 — build it, audit it, fork it. Releases **after** that version are published as ready-to-flash **binaries** (see [Releases](../../releases)) rather than source. The full local-first feature set and the in-browser flasher work with both.
 
-Prerequisites: [ESP-IDF v5.4+](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/)
+Prerequisites: [ESP-IDF v5.5+](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/)
 
 ```bash
 # Receiver Hub
@@ -161,7 +161,7 @@ Two surfaces — pick either, or both. They show the same data.
   <sub><em>Left: the PWA at <a href="https://tanksync.smartghar.org">tanksync.smartghar.org</a> — works from anywhere. Right: the hub's local web UI — works fully offline. Full walkthrough in the <a href="https://github.com/Techposts/TankSync/wiki">Wiki</a>.</em></sub>
 </p>
 
-4. **Transmitter** pairs over the air — hold its `BOOT` button for 2 sec, hub LED turns green when paired
+4. **Transmitter** pairs over the air — hold its `BOOT` button ~3 sec (hub LED turns green when paired). Holding `BOOT` for **>5 sec** after a reset puts the transmitter into **Wi-Fi AP mode** for local firmware updates + diagnostics.
 
 ## Photos of a real build
 
@@ -228,7 +228,7 @@ The firmware works fully **without** the cloud — local web UI on the hub gives
 
 ## Contributing
 
-Issues and PRs welcome. Read the [wiring guide](hardware/wiring.md) before opening hardware-related issues.
+Issues and PRs welcome. Read the [hardware guide](hardware/README.md) before opening hardware-related issues.
 
 ## Author + brand
 
