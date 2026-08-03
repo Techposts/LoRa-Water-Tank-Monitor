@@ -9,7 +9,7 @@
 **Never worry about your water tank again.** A solar-powered sensor on the rooftop, a quiet hub on the wall, and smart water monitoring that keeps working — even when the internet doesn't. Long-range LoRa (RYLR998) to an ESP32 hub, local web UI, Home Assistant via HACS, optional cloud PWA. Open at the core.
 
 <p align="center">
-  <img src="hardware/photos/render-hub-wall.png" width="32%" alt="TankSync hub — wall-mounted, live OLED showing 2 tanks, status LEDs for power, WiFi, and cloud" />
+  <img src="hardware/photos/hub-wall-tft.jpg" width="32%" alt="TankSync hub — wall-mounted, glowing blue LED level ring and a round colour display showing live hub status" />
   <img src="hardware/photos/render-sensor-ultrasonic.png" width="32%" alt="TankSync solar tank sensor — side profile with ultrasonic measurement waves visualised" />
   <img src="hardware/photos/pcb-populated-top.jpg" width="32%" alt="Populated TX PCB — REV 2.2, May 2026 (open hardware)" />
 </p>
@@ -50,7 +50,7 @@ Most "smart tank" products treat the cloud as the product. TankSync treats **rel
 <table>
 <tr>
 <td width="42%" valign="middle">
-  <img src="hardware/photos/render-hub-wall.png" alt="TankSync Developer Edition kit — wall-mounted hub + solar rooftop sensor" />
+  <img src="hardware/photos/tx-rooftop-monsoon.jpg" alt="TankSync solar tank sensor installed on a rooftop water tank in the monsoon, city skyline behind" />
 </td>
 <td valign="middle">
   <h3>Skip the build — Developer Edition kits are on pre-order.</h3>
